@@ -2,8 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def web_scraper(pages: int):
-    f = open('data/titles.csv', 'w')
+def web_scraper(pages: int, file_name: str):
+    f = open('data/' + file_name + '.csv', 'w')
     page = 0
     # For testing
     print("writing to file...")
@@ -19,6 +19,7 @@ def web_scraper(pages: int):
             write_title(item, f)
             write_price(item, f)
             write_current_bids(item, f)
+            write_link(item, f)
             f.write('\n')
         page += 1
     f.close()
@@ -45,8 +46,13 @@ def write_price(item, file):
 
 
 def write_current_bids(item, file):
-    file.write(item.find('span', {'class': 'awe-rt-AcceptedListingActionCount'}).text.strip() + ' Bids')
+    file.write(item.find('span', {'class': 'awe-rt-AcceptedListingActionCount'}).text.strip() + ' Bids' + ',')
+
+
+def write_link(item, file):
+    all_hrefs = item.findAll('a')
+    file.write('https://www.policeauctionscanada.com' + all_hrefs[0]['href'].strip() + ',')
 
 
 if __name__ == '__main__':
-    web_scraper(3)
+    web_scraper(3, 'another')
