@@ -33,12 +33,10 @@ def get_id(title: str):
 
 
 def write_title(item, file):
-    if ',' in item.h1.text:
-        file.write(get_id(item.h1.text.strip()) + ',')
-        file.write(item.h1.text.strip()[:-10] + ',')
-    else:
-        file.write(get_id(item.h1.text.strip()) + ',')
-        file.write(item.h1.text.strip()[:-10] + ',' + ',')
+    table = str.maketrans(dict.fromkeys(','))
+    formatted = item.h1.text.strip().translate(table)
+    file.write(get_id(item.h1.text.strip()) + ',')
+    file.write(formatted[:-10] + ',')
 
 
 def write_price(item, file):
@@ -55,4 +53,4 @@ def write_link(item, file):
 
 
 if __name__ == '__main__':
-    web_scraper(3, 'another')
+    pass
