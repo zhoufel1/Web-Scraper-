@@ -53,4 +53,5 @@ def write_link(item, file):
 
 
 if __name__ == '__main__':
-    pass
+   web_scraper(10, 'test')
+
